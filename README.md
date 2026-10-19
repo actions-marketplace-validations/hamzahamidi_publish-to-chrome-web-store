@@ -472,6 +472,7 @@ The hosts are fixed in the code. There is no input to change them, redirects are
 - Every pull request type-checks the code and runs the tests on Linux, Windows and macOS with a coverage floor of 95% of lines. The tests start the action's entry point against a mock store on all three, and two separate jobs run the action from `action.yml`: one uploads a ZIP, the other signs a CRX with `sign/action.yml` and uploads it. See [ci.yml](.github/workflows/ci.yml). The Linux run reports coverage to [Codecov](https://codecov.io/gh/hamzahamidi/publish-to-chrome-web-store) with a short-lived token, like the store route.
 - [OpenSSF Scorecard](.github/workflows/scorecard.yml) checks the repository's security practices on every push to `main` and weekly, and publishes the result.
 - [CodeQL](.github/workflows/codeql.yml) scans the JavaScript and the workflows on every pull request, every push to `main` and weekly. Dependabot keeps the workflow actions current.
+- [Release PRs](RELEASING.md) expose the proposed version and changelog for maintainer review. The release job waits for tests and CodeQL on the release merge. Release Please manages tags, release notes and release labels.
 - Releases are immutable: once `v1.0.0` is published, its tag and contents cannot change. `v1` points at the newest `1.x` release. [The workflow that moves it](.github/workflows/major-tag.yml) always points `v1` at the highest `1.x.y` release, refuses one that is not immutable, and runs one release at a time. If your organization requires full commit SHAs, pin the commit of a release.
 
 ### Your side
@@ -527,6 +528,9 @@ Yes, optionally. Opt the item in on its Package tab, sign with the `sign` action
 No. It is an independent open source project and calls Google's public API.
 
 ## Development
+
+The [release policy](RELEASING.md) describes release PR review, exact-commit CI
+gating, immutable version tags and publication recovery.
 
 Node.js 24 or later:
 
